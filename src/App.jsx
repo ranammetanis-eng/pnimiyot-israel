@@ -402,6 +402,35 @@ export default function App() {
       <div style={S.content}>
         {tab === "search" && (
           <>
+            {/* כפתורי מחוז מהירים */}
+            <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
+              {[
+                {label:"🗺 כל המחוזות", val:"הכול", color:"#0f3460"},
+                {label:"🕍 ירושלים", val:"ירושלים", color:"#7c3aed"},
+                {label:"🏙 תל אביב והמרכז", val:"תל אביב והמרכז", color:"#0369a1"},
+                {label:"⚓ חיפה והצפון", val:"חיפה והצפון", color:"#0891b2"},
+                {label:"🌵 הדרום", val:"הדרום", color:"#d97706"},
+              ].map(d => (
+                <button key={d.val} onClick={() => setDistrict(d.val)}
+                  style={{
+                    padding:"9px 16px", borderRadius:24,
+                    border:"2px solid " + (district===d.val ? d.color : "#e2e8f0"),
+                    background: district===d.val ? d.color : "#fff",
+                    color: district===d.val ? "#fff" : "#374151",
+                    fontWeight:700, fontSize:13, cursor:"pointer",
+                    boxShadow: district===d.val ? "0 4px 12px " + d.color + "44" : "0 1px 4px #0001",
+                    transition:"all .2s",
+                  }}>
+                  {d.label}
+                  {district===d.val && d.val!=="הכול" && (
+                    <span style={{marginRight:6, background:"#ffffff33", borderRadius:10, padding:"1px 7px", fontSize:11}}>
+                      {homes.filter(h=>h.district===d.val).length}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
             <div style={{background:"#fff",borderRadius:12,padding:"14px 18px",marginBottom:16,boxShadow:"0 1px 8px #0001"}}>
               <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
                 <div style={{position:"relative",flex:"1 1 200px"}}>
