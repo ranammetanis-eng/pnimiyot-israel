@@ -6,7 +6,7 @@ const HOMES = HOMES_JSON.map(h => ({...h, availableBeds: null, notes: h.notes ||
 
 const DISTRICTS = ["הכול", "ירושלים", "תל אביב והמרכז", "חיפה והצפון", "הדרום"];
 const OWNERSHIP = ["הכול", "ציבורי", "פרטי", "ממשלתי", "רשות מקומית"];
-const GENDERS = ["הכול", "זכר", "נקבה", "מעורב / לא ידוע"];
+const GENDERS = ["הכול", "נערים", "נערות", "מעורב"];
 const ROLES = ["הורה", "עו.ד מייצג", "אפוטרופוס", "עובד רווחה", "אחר"];
 
 const S = {
@@ -51,7 +51,7 @@ function HomeCard({home, onSelect, onContact}) {
         <span style={ownershipBadge(home.ownership)}>{home.ownership}</span>
       </div>
       <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:8}}>
-        {home.gender && home.gender !== "לא ידוע" && <span style={S.badge("#f0fdf4","#166534")}>{home.gender === "זכר" ? "👦" : home.gender === "נקבה" ? "👧" : "👥"} {home.gender}</span>}
+        {home.gender && home.gender !== "לא ידוע" && <span style={S.badge("#f0fdf4","#166534")}>{"👦 נערים" : home.gender === "נקבה" ? "👧 נערות" : "👥 מעורב"}</span>}
         {home.capacity > 0 && <span style={S.badge("#f0f9ff","#0369a1")}>קיבולת: {home.capacity}</span>}
         {home.availableBeds !== null && (
           <span style={S.badge(home.availableBeds===0?"#fde8e8":"#d4edda", home.availableBeds===0?"#c0392b":"#155724")}>
@@ -363,8 +363,8 @@ export default function App() {
     }
     if (district !== "הכול" && h.district !== district) return false;
     if (ownership !== "הכול" && h.ownership !== ownership) return false;
-    if (gender === "זכר" && h.gender !== "זכר") return false;
-    if (gender === "נקבה" && h.gender !== "נקבה") return false;
+    if (gender === "נערים" && h.gender !== "זכר") return false;
+    if (gender === "נערות" && h.gender !== "נקבה") return false;
     if (onlyAvail && (h.availableBeds === null || h.availableBeds === 0)) return false;
     return true;
   }), [homes, search, district, ownership, gender, onlyAvail]);
